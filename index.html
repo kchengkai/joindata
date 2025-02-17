@@ -1,9 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome</title>
-</head>
-<body>
-    <h1>Hello, this is my redirect page.</h1>
-</body>
-</html>
+from flask import Flask, request, redirect, url_for
+
+app = Flask(__name__)
+
+@app.route('/oauth/callback')
+def oauth_callback():
+    code = request.args.get('code')
+    # 处理授权码或错误
+    if code:
+        return f"Authorization code received: {code}"
+    else:
+        return "Authorization failed."
+
+if __name__ == '__main__':
+    app.run(debug=True)
